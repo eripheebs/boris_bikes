@@ -40,3 +40,16 @@ describe 'dock' do
 
 end
 
+describe 'initialize' do
+
+	it 'expects capacity to be set by argument' do
+		station = DockingStation.new 2
+		bike = Bike.new
+		2.times do
+			station.dock(bike)
+		end 
+		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
+	end
+
+end
+
