@@ -38,6 +38,20 @@ describe 'dock' do
 		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
 	end
 
+	it 'expect capacity to be reduced if broken bike is returned' do
+		station = DockingStation.new 1
+		bike = Bike.new
+		station.dock(bike, false)
+		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
+	end
+
+	it 'expect no bike to be taken out if only broken bikes remain' do
+		station = DockingStation.new 1
+		bike = Bike.new
+		station.dock(bike, false)
+		expect{ station.release_bike }.to raise_error(RuntimeError, "No more bikes!")
+	end
+
 end
 
 describe 'initialize' do
