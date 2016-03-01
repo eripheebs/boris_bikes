@@ -10,5 +10,11 @@ describe 'release_bike' do
 	it 'expects bike released to be working' do
 		expect(Bike.new.working?).to eq (true)
 	end
+
+	it 'expects error when it runs out of bikes' do
+		expect { DockingStation.new.release_bike }.to raise_error("No more bikes!")
+	end
 	
 end
+
+
