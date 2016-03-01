@@ -12,7 +12,11 @@ describe 'release_bike' do
 	end
 
 	it 'expects error when it runs out of bikes' do
-		expect { DockingStation.new.release_bike }.to raise_error("No more bikes!")
+		station = DockingStation.new
+		19.times do
+			station.release_bike
+		end
+		expect{ station.release_bike }.to raise_error(RuntimeError, "No more bikes!")
 	end
 	
 end
