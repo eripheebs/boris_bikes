@@ -1,7 +1,9 @@
-require DockingStation
+require '../lib/docking_station.rb'
 
-describe 'DockingStation' do 
-	it 'expect new docking station object to be initialised when adding new docking station' do
-		expect(docking_station = DockingStation.new).to eq ('docking_station')
+describe 'release_bike' do
+
+	it 'expect docking station to release bike' do
 	end
+	
 end
+
