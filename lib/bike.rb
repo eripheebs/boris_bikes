@@ -1,3 +1,5 @@
+require_relative 'docking_station'
+
 class Bike
 	attr_reader :docked
 	def initialize
@@ -8,7 +10,7 @@ class Bike
 		true
 	end
 
-	def dock
+	def dock(bike)
 		@docked = true
 	end
 
