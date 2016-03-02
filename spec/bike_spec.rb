@@ -1,16 +1,11 @@
-require '../lib/docking_station.rb'
-require '../lib/bike.rb'
+require "bike"
 
+describe Bike do
 
-describe 'working?' do
+  it {is_expected.to respond_to(:working?)}
 
-	it 'expect working bike to return true' do
-	end
-	
-end
+  it 'can be reported as broken' do
+    expect(subject.report_broken).to be(true)
+  end
 
-describe 'docked' do
-	it 'expects new bike not to be docked' do
-		expect(Bike.new.docked).to eq(false)
-	end
 end

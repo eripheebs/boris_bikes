@@ -1,17 +1,17 @@
-require_relative 'docking_station'
-
 class Bike
-	attr_reader :docked
-	def initialize
-		@docked = false
-	end
 
-	def working?
-		true
-	end
+  attr_reader :broken
 
-	def dock(bike)
-		@docked = true
-	end
+  def initialize
+    @broken = false
+  end
+
+  def report_broken
+    @broken = true
+  end
+
+  def working?
+    true
+  end
 
 end

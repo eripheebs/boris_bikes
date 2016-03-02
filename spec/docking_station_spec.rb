@@ -1,74 +1,47 @@
-require '../lib/docking_station.rb'
-require '../lib/bike.rb'
+require 'docking_station'
 
-describe 'release_bike' do
+describe DockingStation do
 
-	it 'expect docking station to release bike' do
-		station = DockingStation.new
-		bike = double(:bike)
-		station.dock(bike)
-		expect(station.release_bike).to eq (bike)
-	end
+  let(:bike) {double :bike, broken: false}
+  let(:broken_bike) {double :bike, broken: true}
 
-	let(:bike) { double :bike }
-	it 'expects bike released to be working' do
-		allow(bike).to receive(:working?).and_return(true)
-		station = DockingStation.new
-		station.dock(bike)
-		bike = station.release_bike
-		expect(bike.working?).to eq (true)
-	end
+  describe 'release_bike' do
 
-	it 'expects error when it runs out of bikes' do
-		station = DockingStation.new
-		expect{ station.release_bike }.to raise_error(RuntimeError, "No more bikes!")
-	end
-	
-end
+    it 'raises exception when no bikes to release' do
+      expect{subject.release_bike}.to raise_error 'No bikes to release' if subject.bikes.empty?
+    end
 
-describe 'dock' do
+    it 'expects bike to be released and bike to work' do
+      subject.dock bike
+      expect(subject.release_bike).to be bike
+    end
 
-	it 'expect bike rack to add a bike when method called' do
-		station = DockingStation.new
-		bike = double(:bike)
-		expect(station.dock(bike)).to eq([bike])
-	end
+  end
 
-	it 'expect error message when trying to dock bike in full docking station' do
-		station = DockingStation.new
-		bike = double(:bike)
-		20.times do
-			station.dock(bike)
-		end 
-		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
-	end
+  describe 'dock' do
 
-	it 'expect capacity to be reduced if broken bike is returned' do
-		station = DockingStation.new 1
-		bike = double(:bike)
-		station.dock(bike, false)
-		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
-	end
+    it 'docks given bike' do
+      subject.dock(bike)
+      expect(subject.bikes).to eq([bike])
+    end
 
-	it 'expect no bike to be taken out if only broken bikes remain' do
-		station = DockingStation.new 1
-		bike = double(:bike)
-		station.dock(bike, false)
-		expect{ station.release_bike }.to raise_error(RuntimeError, "No more bikes!")
-	end
+    it 'raises an exception when there is already a bike docked' do
+      subject.capacity.times{subject.dock(bike)}
+      expect{subject.dock(bike)}.to raise_error 'Docking Station full'
+    end
+
+    it 'does not release broken bike' do
+      subject.dock(broken_bike)
+      expect{subject.release_bike}.to raise_error 'No bikes to release'
+    end
+
+    it 'accepts all bikes' do
+      bike = double(:bike, report_broken: true)
+      bike.report_broken
+      subject.dock(bike)
+      expect(subject.bikes).to include(bike)
+    end
+
+  end
 
 end
-
-describe 'initialize' do
-
-	it 'expects capacity to be set by argument' do
-		station = DockingStation.new 2
-		bike = double(:bike)
-		2.times do
-			station.dock(bike)
-		end 
-		expect { station.dock(bike) }.to raise_error(RuntimeError, "Dock is full!")
-	end
-
-end
-
