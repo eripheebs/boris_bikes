@@ -25,24 +25,16 @@ $ tree
 .
 └── spec
 	├── bike_spec.rb
-
     ├── docking_station_spec.rb
-
     ├── van_spec.rb
-
     ├── garage_spec.rb
-
     └── spec_helper.rb
-
 
 .
 └── lib
 	├── bike.rb
-
 	├── van.rb
-
 	├── garage.rb
-
 	└── docking_station.rb
 
 
