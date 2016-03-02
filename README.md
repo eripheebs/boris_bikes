@@ -24,7 +24,6 @@ $ tree
 
 .
 └── spec
-
 	├── bike_spec.rb
 
     ├── docking_station_spec.rb
@@ -38,7 +37,6 @@ $ tree
 
 .
 └── lib
-
 	├── bike.rb
 
 	├── van.rb
