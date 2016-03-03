@@ -28,7 +28,8 @@ class DockingStation
     fail 'No bikes to release' if bikes_all_broken == true
     else
       fail 'No bike with that ID exists' unless @bikes.has_key?(bike_id)
-      return @bikes[bike_id]
+      fail 'That bike is broken' if @bikes[bike_id].broken == true
+        return @bikes[bike_id]
     end
   end
 

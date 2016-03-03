@@ -35,7 +35,7 @@ require_relative 'docking_station'
 		report = gets.chomp.downcase
 		if report == "yes"
 			@bike.report_broken
-			puts "Your bike has been reported as broken"
+			puts "Your bike has been reported as broken."
 		elsif report == 'no'
 			puts "Okay, we believe your bike is still working!"
 		else 
@@ -48,11 +48,16 @@ require_relative 'docking_station'
 		puts "Would you like to pick a specific bike by ID number? (commands: yes/no)"
 			pick = gets.chomp.downcase
 		if pick == "yes"
-			puts "These are your options: #{@station.bikes}"
+			puts "These are your options: #{@station.bikes.keys}"
 			puts "Please enter the ID of the bike you want to pick (case sensitive)."
 			i_d = gets.chomp
-			@station.release_bike(i_d)
-			puts "You have been given bike with ID number #{i_d}."
+			if @station.bikes.has_key?(i_d)
+				@station.release_bike(i_d)
+				puts "You have been given bike with ID number #{i_d}."
+			else 
+				puts "There is no bike with that ID"
+				pick_a_bike
+			end
 		elsif pick == "no"
 			@station.release_bike
 			puts "You have been given a bike."
