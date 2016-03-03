@@ -1,12 +1,17 @@
-require 'wheelies'
-#why is this needs? ^
-
 class Bike
 
-  include Wheelies
+	attr_reader :broken
 
-  def initialize
-    set_up_wheelie
-  end
+	def initialize
+		@broken = false
+  	end
+
+  	def report_broken
+    	@broken = true
+  	end
+
+  	def working?
+    	true
+  	end
 
 end
