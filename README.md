@@ -42,3 +42,5 @@ $ tree
 Day 1 Partner: Sachin
 
 Day 2 Partner: Rhiannon
+
+Day 3 Partner: Chris
