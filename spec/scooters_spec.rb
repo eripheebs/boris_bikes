@@ -1,6 +1,6 @@
-require 'bike'
+require 'scooters'
 
-describe Bike do
+describe Scooter do
 
   it {is_expected.to respond_to(:working?)}
 
@@ -9,3 +9,4 @@ describe Bike do
   end
 
 end
+

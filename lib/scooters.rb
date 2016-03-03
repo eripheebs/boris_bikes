@@ -1,7 +1,5 @@
-require 'wheelies'
-
-class Bike
-
+class Scooter
+	
   include Wheelies
 
   def initialize
