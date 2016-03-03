@@ -1,15 +1,15 @@
 module BikeContainer
 
   	def set_up_container(capacity)
-    	@bikes = []
+    	@bikes = {}
     	@capacity = capacity
   	end
 
 	def take_bikes(location, to_fix)
-	    location.each do |bike|
+	    location.each do |bike_id, bike|
 	      if bike.broken == to_fix
 	        location.delete(bike)
-	        @bikes << bike
+	        @bikes[bike_id] = bike
 	      end
 	    end
 	end
