@@ -36,10 +36,9 @@ describe DockingStation do
     end
 
     it 'accepts all bikes' do
-      bike = double(:bike, report_broken: true)
-      bike.report_broken
       subject.dock(bike)
-      expect(subject.bikes).to include(bike)
+      subject.dock(broken_bike)
+      expect(subject.bikes).to include(bike, broken_bike)
     end
 
     it 'expects it to not dock non-bikes' do

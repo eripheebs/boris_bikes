@@ -29,6 +29,7 @@ class DockingStation
 
   def dock (bike)
     fail 'Docking Station full' if full?
+    fail "That's not a bike!" unless bike.respond_to?('broken')
     @bikes << bike
   end
 
