@@ -1,8 +1,10 @@
-class Bike
+#wheelies are scooters and bikes (couldn't think of a better short description)
+
+module Wheelies
 
 	attr_reader :broken
 
-	def initialize
+	def set_up_wheelie
 		@broken = false
   	end
 

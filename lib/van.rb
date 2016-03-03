@@ -1,18 +1,13 @@
 class Van
 
-  attr_reader :bikes
+  include BikeContainer
 
-  def initialize
-    @bikes = []
-  end
+  attr_reader :bikes, :capacity
 
-  def take_bikes (location, to_fix)
-    location.each do |bike|
-      if bike.broken == to_fix
-        location.delete(bike)
-        @bikes << bike
-      end
-    end
+  DEFAULT_CAPACITY = 20
+
+  def initialize(capacity = DEFAULT_CAPACITY)
+      set_up_container(capacity)
   end
 
 end

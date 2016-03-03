@@ -12,22 +12,8 @@ describe DockingStation do
     end
 
     it 'expects bike to be released and bike to work' do
-      subject.dock bike
-      expect(subject.release_bike).to be bike
-    end
-
-  end
-
-  describe 'dock' do
-
-    it 'docks given bike' do
       subject.dock(bike)
-      expect(subject.bikes).to eq([bike])
-    end
-
-    it 'raises an exception when there is already a bike docked' do
-      subject.capacity.times{subject.dock(bike)}
-      expect{subject.dock(bike)}.to raise_error 'Docking Station full'
+      expect(subject.release_bike).to eq(bike)
     end
 
     it 'does not release broken bike' do
@@ -35,11 +21,47 @@ describe DockingStation do
       expect{subject.release_bike}.to raise_error 'No bikes to release'
     end
 
-    it 'accepts all bikes' do
-      bike = double(:bike, report_broken: true)
-      bike.report_broken
+    it 'expects bike can be picked by bike ID' do
       subject.dock(bike)
-      expect(subject.bikes).to include(bike)
+      expect(subject.release_bike("#{bike.object_id}")).to eq(bike)
+    end
+
+    it 'expects error message if ID passed as argument is not valid' do
+      subject.dock(bike)
+      expect { subject.release_bike("moo") }.to raise_error 'No bike with that ID exists'
+    end
+
+  end
+
+  describe 'dock' do
+
+    it 'expects dock to give bike' do
+      subject.dock(bike)
+      expect(subject.bikes).to eq({"#{bike.object_id}" => bike})
+    end
+
+    it 'raises an exception when dock is full' do
+      station = DockingStation.new (0)
+      expect{station.dock(bike)}.to raise_error 'Docking Station full'
+    end
+
+    it 'accepts all bikes' do
+      subject.dock(bike)
+      subject.dock(broken_bike)
+      expect(subject.bikes).to include("#{bike.object_id}" => bike, "#{broken_bike.object_id}" => broken_bike)
+    end
+
+    it 'expects it to not dock non-bikes' do
+      expect{subject.dock(Object.new)}.to raise_error "That's not a bike!"
+    end
+
+  end
+
+  describe 'take_bikes' do
+
+    it 'expects to fill the van with broken bikes' do
+      subject.take_bikes({"#{bike.object_id}" => bike, "#{broken_bike.object_id}" => broken_bike}, true)
+      expect(subject.bikes).to eq({"#{broken_bike.object_id}" => broken_bike})
     end
 
   end
