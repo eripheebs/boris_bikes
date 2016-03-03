@@ -44,4 +44,13 @@ describe DockingStation do
 
   end
 
+  describe 'take_bikes' do
+
+    it 'expects to fill the van with broken bikes' do
+      subject.take_bikes([bike, broken_bike],true)
+      expect(subject.bikes).to eq([broken_bike])
+    end
+
+  end
+
 end
