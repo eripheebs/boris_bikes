@@ -1,12 +1,12 @@
-require 'scooters'
+# require 'scooters'
 
-describe Scooter do
+# describe Scooter do
 
-  it {is_expected.to respond_to(:working?)}
+#   it {is_expected.to respond_to(:working?)}
 
-  it 'can be reported as broken' do
-    expect(subject.report_broken).to be(true)
-  end
+#   it 'can be reported as broken' do
+#     expect(subject.report_broken).to be(true)
+#   end
 
-end
+# end
 

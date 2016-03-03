@@ -35,7 +35,7 @@ require_relative 'docking_station'
 		report = gets.chomp.downcase
 		if report == "yes"
 			@bike.report_broken
-			puts "Your bike has been reported as broken"
+			puts "Your bike has been reported as broken."
 		elsif report == 'no'
 			puts "Okay, we believe your bike is still working!"
 		else 
@@ -45,22 +45,36 @@ require_relative 'docking_station'
 	end
 
 	def pick_a_bike
-		puts "Would you like to pick a specific bike by ID number? (commands: yes/no)"
-			pick = gets.chomp.downcase
-		if pick == "yes"
-			puts "These are your options: #{@station.bikes}"
-			puts "Please enter the ID of the bike you want to pick (case sensitive)."
-			i_d = gets.chomp
-			@station.release_bike(i_d)
-			puts "You have been given bike with ID number #{i_d}."
-		elsif pick == "no"
-			@station.release_bike
-			puts "You have been given a bike."
-		else 
-			puts "Please enter yes or no only."
-			pick_a_bike
+		if @station.bikes.empty? || (@station.bikes.select{|id, bike| (bike.broken == false)}.keys).empty?
+			puts "There are no working bikes at the docking station right now!"
+			dock_or_release
+		else	
+			puts "Would you like to pick a specific bike by ID number? (commands: yes/no)"
+				pick = gets.chomp.downcase
+			if pick == "yes"
+				puts "These are your options: #{@station.bikes.select{|id, bike| (bike.broken == false)}.keys}"
+				puts "Please enter the ID of the bike you want to pick (case sensitive)."
+				i_d = gets.chomp
+				if @station.bikes.has_key?(i_d)
+					if @station.bikes[i_d].broken
+						puts "That bike is broken!"
+						pick_a_bike
+					else	
+						@station.release_bike(i_d)
+						puts "You have been given bike with ID number #{i_d}."
+					end
+				else 
+					puts "There is no bike with that ID"
+					pick_a_bike
+				end
+			elsif pick == "no"
+				@station.release_bike
+				puts "You have been given a bike."
+			else 
+				puts "Please enter yes or no only."
+				pick_a_bike
+			end
 		end
-
 	end
 
 user_chatbot

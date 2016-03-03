@@ -26,6 +26,11 @@ describe DockingStation do
       expect(subject.release_bike("#{bike.object_id}")).to eq(bike)
     end
 
+      it 'expects bike cannot be picked by ID if broken' do
+      subject.dock(broken_bike)
+      expect{subject.release_bike("#{broken_bike.object_id}")}.to raise_error 'That bike is broken'
+    end
+
     it 'expects error message if ID passed as argument is not valid' do
       subject.dock(bike)
       expect { subject.release_bike("moo") }.to raise_error 'No bike with that ID exists'
