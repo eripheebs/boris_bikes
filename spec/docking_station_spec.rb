@@ -46,8 +46,8 @@ describe DockingStation do
     end
 
     it 'raises an exception when dock is full' do
-      station = DockingStation.new (0)
-      expect{station.dock(bike)}.to raise_error 'Docking Station full'
+      station = DockingStation.new 0
+      expect{station.dock(bike)}.to raise_error 'Capacity Limit Reached.'
     end
 
     it 'accepts all bikes' do

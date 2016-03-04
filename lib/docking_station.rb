@@ -34,16 +34,12 @@ class DockingStation
   end
 
   def dock(bike)
-    fail 'Docking Station full' if full?
+    fail 'Capacity Limit Reached.' if full?
     fail "That's not a bike!" unless bike.respond_to?('broken')
     @bikes["#{bike.object_id}"] = bike
   end
 
   private
-
-  def full?
-    @bikes.size == @capacity
-  end
 
   def empty?
     @bikes.empty?
