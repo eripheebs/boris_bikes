@@ -1,30 +1,35 @@
-# require 'bike_container'
+require 'van'
+require 'docking_station'
+require 'garage'
 
-# include BikeContainer
+shared_examples_for "BikeContainer" do
+  let(:bikecontainer) { described_class.new }
 
-# describe BikeContainer do
+  it 'should show stored bikes' do
+    expect(bikecontainer.bikes).to eq({})
+  end
 
-# 	let!(:dummy) { Class.new { include BikeContainer; def bikes; @bikes; end } }
-# 	let(:bike) { double :bike, broken: false }
-# 	let(:broken_bike) { double :bike, broken: true}
-	
-# 	before(:each) do
-# 		dummy.set_up_container(20)
-# 	end
+  describe 'load' do
 
-#   describe 'take_bikes' do
+    it 'expects to fill the van with broken bikes' do
+      broken_bike = double(:bike, broken: true)
+      bike = double(:bike, broken: false)
+      subject.take_bikes({"#{bike.object_id}" => bike, "#{broken_bike.object_id}" => broken_bike}, true)
+      expect(subject.bikes).to eq({"#{broken_bike.object_id}" => broken_bike})
+    end
 
-#     it 'expects to take fixed bikes' do
-#     	p dummy
-# 	    dummy.take_bikes([bike, broken_bike],false)
-# 	    expect(dummy.bikes).to eq([bike])
-#     end
+  end
 
-# 	it 'expects to take broken bikes' do
-# 	    dummy.take_bikes([bike, broken_bike],true)
-# 	    expect(dummy.bikes).to eq([broken_bike])
-#     end
+end
 
-#   end
+describe Van do
+  it_behaves_like 'BikeContainer'
+end
 
-# end
+describe Garage do
+  it_behaves_like 'BikeContainer'
+end
+
+describe DockingStation do
+  it_behaves_like 'BikeContainer'
+end
